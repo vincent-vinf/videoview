@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 import './App.css'
 
+const API_BASE_URL = 'http://localhost:8081'
+
 function App() {
   const [videos, setVideos] = useState([])
   const [currentVideo, setCurrentVideo] = useState(null)
@@ -10,7 +12,7 @@ function App() {
   useEffect(() => {
     const fetchVideos = async () => {
       try {
-        const response = await axios.get('http://localhost:8081/api/videos')
+        const response = await axios.get(`${API_BASE_URL}/api/videos`)
         setVideos(response.data)
         if (response.data.length > 0) {
           // Optionally auto-select the first video
@@ -46,7 +48,7 @@ function App() {
                 autoPlay
                 width="100%"
                 height="auto"
-                src={`http://localhost:8081${currentVideo.url}`}
+                src={`${API_BASE_URL}${currentVideo.url}`}
               >
                 Your browser does not support the video tag.
               </video>
