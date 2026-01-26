@@ -76,3 +76,30 @@ header {
 .error {
   color: #ff6b6b;
 }
+
+@media (max-width: 768px) {
+  #root {
+    padding: 1rem;
+  }
+
+  .main-content {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .video-player-section {
+    min-height: 250px;
+  }
+
+  .video-list-section {
+    max-height: 400px;
+  }
+
+  header {
+    margin-bottom: 1rem;
+  }
+
+  h1 {
+    font-size: 2em;
+  }
+}
