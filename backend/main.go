@@ -19,7 +19,7 @@ var videoDir string
 
 func main() {
 	flag.StringVar(&videoDir, "dir", "./videos", "Directory containing video files")
-	port := flag.String("port", "8080", "Port to run the server on")
+	port := flag.String("port", "8088", "Port to run the server on")
 	flag.Parse()
 
 	// Verify video directory exists
