@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 import './App.css'
 
-const API_BASE_URL = 'http://localhost:8081'
+const API_BASE_URL = `http://${window.location.hostname}:8081`
 
 function App() {
   const [videos, setVideos] = useState([])
