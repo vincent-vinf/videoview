@@ -1,6 +1,8 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import axios from 'axios'
+import VideoPlayer from './VideoPlayer'
 import './App.css'
+import videojs from 'video.js'
 
 const API_BASE_URL = `http://${window.location.hostname}:8081`
 
@@ -8,6 +10,7 @@ function App() {
   const [videos, setVideos] = useState([])
   const [currentVideo, setCurrentVideo] = useState(null)
   const [error, setError] = useState(null)
+  const playerRef = useRef(null)
 
   useEffect(() => {
     const fetchVideos = async () => {
@@ -31,10 +34,23 @@ function App() {
     setCurrentVideo(video)
   }
 
+  const handlePlayerReady = (player) => {
+    playerRef.current = player;
+
+    // You can handle player events here, for example:
+    player.on('waiting', () => {
+      videojs.log('player is waiting');
+    });
+
+    player.on('dispose', () => {
+      videojs.log('player will dispose');
+    });
+  };
+
   return (
     <div className="container">
       <header>
-        <h1>fMP4 Video Player</h1>
+        <h1>MP4 Video Player</h1>
       </header>
 
       <main className="main-content">
@@ -42,16 +58,20 @@ function App() {
           {currentVideo ? (
             <div className="video-wrapper">
               <h2>{currentVideo.name}</h2>
-              <video
-                key={currentVideo.url} // Force re-render when video changes
-                controls
-                autoPlay
-                width="100%"
-                height="auto"
-                src={`${API_BASE_URL}${currentVideo.url}`}
-              >
-                Your browser does not support the video tag.
-              </video>
+              <VideoPlayer
+                options={{
+                  autoplay: true,
+                  controls: true,
+                  responsive: true,
+                  fluid: true,
+                  playbackRates: [0.5, 1, 1.5, 2, 5, 10],
+                  sources: [{
+                    src: `${API_BASE_URL}${currentVideo.url}`,
+                    type: 'video/mp4'
+                  }]
+                }}
+                onReady={handlePlayerReady}
+              />
             </div>
           ) : (
             <div className="placeholder">

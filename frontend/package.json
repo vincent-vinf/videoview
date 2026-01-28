@@ -13,7 +13,8 @@
     "axios": "^1.13.3",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
-    "vibe-kanban-web-companion": "^0.0.5"
+    "vibe-kanban-web-companion": "^0.0.5",
+    "video.js": "^8.23.4"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",
