@@ -1,8 +1,10 @@
 import { useState, useEffect, useRef } from 'react'
 import axios from 'axios'
 import VideoPlayer from './VideoPlayer'
+import Timeline from './Timeline'
 import './App.css'
 import videojs from 'video.js'
+import { formatDistanceToNow } from 'date-fns'
 
 const API_BASE_URL = `http://${window.location.hostname}:8081`
 
@@ -11,6 +13,7 @@ function App() {
   const [currentVideo, setCurrentVideo] = useState(null)
   const [error, setError] = useState(null)
   const playerRef = useRef(null)
+  const [seekToTime, setSeekToTime] = useState(null)
 
   useEffect(() => {
     const fetchVideos = async () => {
@@ -32,7 +35,22 @@ function App() {
 
   const handleVideoSelect = (video) => {
     setCurrentVideo(video)
+    setSeekToTime(null) // Reset seek time on manual select
   }
+
+  const handleTimelineSelect = (video, time) => {
+    if (currentVideo && currentVideo.url === video.url) {
+      // Same video, just seek
+      if (playerRef.current) {
+        playerRef.current.currentTime(time);
+        playerRef.current.play();
+      }
+    } else {
+      // Change video and set seek time
+      setCurrentVideo(video);
+      setSeekToTime(time);
+    }
+  };
 
   const handlePlayerReady = (player) => {
     playerRef.current = player;
@@ -44,6 +62,14 @@ function App() {
 
     player.on('dispose', () => {
       videojs.log('player will dispose');
+    });
+
+    player.on('loadedmetadata', () => {
+      if (seekToTime !== null) {
+        player.currentTime(seekToTime);
+        player.play();
+        setSeekToTime(null);
+      }
     });
   };
 
@@ -57,7 +83,7 @@ function App() {
         <div className="video-player-section">
           {currentVideo ? (
             <div className="video-wrapper">
-              <h2>{currentVideo.name}</h2>
+              <h2>{currentVideo.cameraName} - {formatDistanceToNow(new Date(currentVideo.timestamp), { addSuffix: true })}</h2>
               <VideoPlayer
                 options={{
                   autoplay: true,
@@ -78,6 +104,8 @@ function App() {
               <p>Select a video to play</p>
             </div>
           )}
+
+          <Timeline videos={videos} onSelectTime={handleTimelineSelect} />
         </div>
 
         <div className="video-list-section">
@@ -89,11 +117,23 @@ function App() {
             <ul className="video-list">
               {videos.map((video) => (
                 <li
-                  key={video.name}
-                  className={currentVideo && currentVideo.name === video.name ? 'active' : ''}
+                  key={video.url}
+                  className={`video-item ${currentVideo && currentVideo.url === video.url ? 'active' : ''}`}
                   onClick={() => handleVideoSelect(video)}
                 >
-                  {video.name}
+                  {video.thumbnailUrl && (
+                    <img
+                      src={`${API_BASE_URL}${video.thumbnailUrl}`}
+                      alt={video.name}
+                      className="video-thumbnail"
+                    />
+                  )}
+                  <div className="video-info">
+                    <span className="video-camera">{video.cameraName}</span>
+                    <span className="video-time">
+                      {formatDistanceToNow(new Date(video.timestamp), { addSuffix: true })}
+                    </span>
+                  </div>
                 </li>
               ))}
             </ul>

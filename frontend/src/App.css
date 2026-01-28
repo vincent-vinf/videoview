@@ -61,6 +61,97 @@ header {
   border-bottom: 1px solid #333;
   cursor: pointer;
   transition: background-color 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.video-thumbnail {
+  width: 120px;
+  height: 68px;
+  object-fit: cover;
+  border-radius: 4px;
+  background-color: #000;
+  flex-shrink: 0;
+}
+
+.video-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.video-camera {
+  font-weight: bold;
+  font-size: 0.9em;
+  margin-bottom: 4px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.video-time {
+  font-size: 0.8em;
+  color: #aaa;
+}
+
+/* Timeline Styles */
+.timeline-container {
+  flex: 0 0 100px;
+  background-color: #242424;
+  padding: 10px;
+  margin-top: 10px;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  color: #fff;
+}
+
+.timeline-info {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+  font-size: 0.8em;
+  color: #aaa;
+}
+
+.timeline-hover-time {
+  color: #fff;
+  font-weight: bold;
+}
+
+.timeline-track {
+  position: relative;
+  height: 40px;
+  background-color: #000; /* Black for no video */
+  cursor: pointer;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.timeline-segment {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  background-color: #28a745; /* Green for video coverage */
+  opacity: 0.8;
+  transition: opacity 0.2s;
+}
+
+.timeline-segment:hover {
+  opacity: 1;
+  background-color: #34ce57;
+}
+
+.timeline-cursor {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 2px;
+  background-color: #fff;
+  pointer-events: none;
+  z-index: 10;
 }
 
 .video-list li:hover {
