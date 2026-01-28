@@ -19,10 +19,11 @@ function App() {
     const fetchVideos = async () => {
       try {
         const response = await axios.get(`${API_BASE_URL}/api/videos`)
-        setVideos(response.data)
-        if (response.data.length > 0) {
-          // Optionally auto-select the first video
-          // setCurrentVideo(response.data[0])
+        // Sort videos by timestamp descending (newest first)
+        const sortedVideos = response.data.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp))
+        setVideos(sortedVideos)
+        if (sortedVideos.length > 0) {
+          setCurrentVideo(sortedVideos[0])
         }
       } catch (err) {
         console.error("Error fetching videos:", err)
@@ -86,10 +87,10 @@ function App() {
               <h2>{currentVideo.cameraName} - {formatDistanceToNow(new Date(currentVideo.timestamp), { addSuffix: true })}</h2>
               <VideoPlayer
                 options={{
-                  autoplay: true,
+                  autoplay: false,
                   controls: true,
                   responsive: true,
-                  fluid: true,
+                  fill: true,
                   playbackRates: [0.5, 1, 1.5, 2, 5, 10],
                   sources: [{
                     src: `${API_BASE_URL}${currentVideo.url}`,
@@ -104,7 +105,9 @@ function App() {
               <p>Select a video to play</p>
             </div>
           )}
+        </div>
 
+        <div className="timeline-section">
           <Timeline videos={videos} onSelectTime={handleTimelineSelect} />
         </div>
 

@@ -1,82 +1,142 @@
 #root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
   text-align: center;
+  height: 100vh;
+  overflow: hidden;
 }
 
 .container {
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  height: 100%;
+  overflow: hidden;
 }
 
 header {
-  margin-bottom: 2rem;
+  padding: 1rem;
+  background-color: #1a1a1a;
+  flex-shrink: 0;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 1.5rem;
 }
 
 .main-content {
   display: flex;
-  gap: 2rem;
-  align-items: flex-start;
+  flex-direction: column;
+  flex: 1;
+  overflow: hidden;
+  gap: 0;
 }
 
 .video-player-section {
-  flex: 2;
-  background: #1a1a1a;
-  padding: 1rem;
-  border-radius: 8px;
-  min-height: 400px;
+  flex: 1;
+  background: #000;
+  padding: 0;
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow: hidden;
+  position: relative;
 }
 
 .video-wrapper {
   width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.video-wrapper h2 {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 10;
+  background: rgba(0, 0, 0, 0.7);
+  padding: 5px 10px;
+  border-radius: 4px;
+  margin: 0;
+  font-size: 1rem;
+  pointer-events: none;
+}
+
+/* Ensure video.js takes full height */
+.video-js {
+  width: 100%;
+  height: 100%;
+}
+
+.video-js .vjs-tech {
+  object-fit: contain;
 }
 
 .placeholder {
   color: #888;
 }
 
+.timeline-section {
+  flex: 0 0 auto;
+  background-color: #242424;
+  padding: 5px 10px;
+  z-index: 5;
+}
+
 .video-list-section {
-  flex: 1;
-  background: #242424;
-  padding: 1rem;
-  border-radius: 8px;
-  max-height: 600px;
-  overflow-y: auto;
+  flex: 0 0 180px;
+  background: #1a1a1a;
+  padding: 10px;
+  overflow-x: auto;
+  overflow-y: hidden;
   text-align: left;
+  border-top: 1px solid #333;
+  display: flex;
+  flex-direction: column;
+}
+
+.video-list-section h3 {
+  margin: 0 0 10px 0;
+  font-size: 1rem;
+  position: sticky;
+  left: 0;
 }
 
 .video-list {
   list-style: none;
   padding: 0;
   margin: 0;
+  display: flex;
+  gap: 10px;
+  height: 100%;
 }
 
 .video-list li {
-  padding: 10px;
-  border-bottom: 1px solid #333;
+  padding: 8px;
+  border: 1px solid #333;
+  border-radius: 6px;
   cursor: pointer;
   transition: background-color 0.2s;
   display: flex;
-  align-items: center;
-  gap: 10px;
+  flex-direction: column;
+  width: 200px;
+  flex-shrink: 0;
+  background-color: #242424;
 }
 
 .video-thumbnail {
-  width: 120px;
-  height: 68px;
+  width: 100%;
+  height: 100px;
   object-fit: cover;
   border-radius: 4px;
   background-color: #000;
-  flex-shrink: 0;
+  margin-bottom: 8px;
 }
 
 .video-info {
-  flex: 1;
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -85,7 +145,7 @@ header {
 .video-camera {
   font-weight: bold;
   font-size: 0.9em;
-  margin-bottom: 4px;
+  margin-bottom: 2px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -98,21 +158,20 @@ header {
 
 /* Timeline Styles */
 .timeline-container {
-  flex: 0 0 100px;
   background-color: #242424;
-  padding: 10px;
-  margin-top: 10px;
-  border-radius: 8px;
+  padding: 5px;
+  border-radius: 4px;
   display: flex;
   flex-direction: column;
   color: #fff;
+  width: 100%;
 }
 
 .timeline-info {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 5px;
-  font-size: 0.8em;
+  margin-bottom: 2px;
+  font-size: 0.7em;
   color: #aaa;
 }
 
@@ -123,7 +182,7 @@ header {
 
 .timeline-track {
   position: relative;
-  height: 40px;
+  height: 30px;
   background-color: #000; /* Black for no video */
   cursor: pointer;
   border-radius: 4px;
@@ -160,8 +219,7 @@ header {
 
 .video-list li.active {
   background-color: #444;
-  font-weight: bold;
-  color: #646cff;
+  border-color: #646cff;
 }
 
 .error {
@@ -170,27 +228,41 @@ header {
 
 @media (max-width: 768px) {
   #root {
-    padding: 1rem;
-  }
-
-  .main-content {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .video-player-section {
-    min-height: 250px;
-  }
-
-  .video-list-section {
-    max-height: 400px;
+    padding: 0;
   }
 
   header {
-    margin-bottom: 1rem;
+    padding: 0.5rem;
   }
 
-  h1 {
-    font-size: 2em;
+  header h1 {
+    font-size: 1.2rem;
+  }
+
+  .video-list-section {
+    flex: 0 0 140px;
+    padding: 5px;
+  }
+
+  .video-list li {
+    width: 160px;
+    padding: 5px;
+  }
+
+  .video-thumbnail {
+    height: 80px;
+    margin-bottom: 4px;
+  }
+
+  .video-camera {
+    font-size: 0.8em;
+  }
+
+  .video-time {
+    font-size: 0.7em;
+  }
+
+  .timeline-track {
+    height: 20px;
   }
 }
