@@ -156,7 +156,7 @@ func ensureThumbnail(videoPath, thumbPath string) error {
 		return nil // Thumbnail exists
 	}
 	// Generate thumbnail
-	cmd := exec.Command("ffmpeg", "-y", "-i", videoPath, "-ss", "00:00:01", "-vframes", "1", thumbPath)
+	cmd := exec.Command("ffmpeg", "-y", "-i", videoPath, "-ss", "00:00:01", "-vframes", "1", "-vf", "scale=iw/2:ih/2", thumbPath)
 	output, err := cmd.CombinedOutput()
 	if err != nil {
 		return fmt.Errorf("ffmpeg failed: %v, output: %s", err, string(output))
