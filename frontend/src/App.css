@@ -19,11 +19,29 @@ header {
   padding: 1rem;
   background-color: #1a1a1a;
   flex-shrink: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 header h1 {
   margin: 0;
   font-size: 1.5rem;
+}
+
+.camera-selector select {
+  padding: 8px 12px;
+  border-radius: 4px;
+  border: 1px solid #444;
+  background-color: #333;
+  color: #fff;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.camera-selector select:focus {
+  outline: none;
+  border-color: #646cff;
 }
 
 .main-content {
@@ -87,7 +105,7 @@ header h1 {
 }
 
 .video-list-section {
-  flex: 0 0 180px;
+  flex: 0 0 auto;
   background: #1a1a1a;
   padding: 10px;
   overflow-x: auto;
@@ -111,7 +129,6 @@ header h1 {
   margin: 0;
   display: flex;
   gap: 10px;
-  height: 100%;
 }
 
 .video-list li {
@@ -226,6 +243,22 @@ header h1 {
   color: #ff6b6b;
 }
 
+.timeline-live-segment {
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 100%;
+  width: 30px;
+  background-color: #007bff;
+  cursor: pointer;
+  z-index: 20;
+  transition: background-color 0.2s;
+}
+
+.timeline-live-segment:hover {
+  background-color: #3395ff;
+}
+
 @media (max-width: 768px) {
   #root {
     padding: 0;
@@ -240,7 +273,7 @@ header h1 {
   }
 
   .video-list-section {
-    flex: 0 0 140px;
+    flex: 0 0 auto;
     padding: 5px;
   }
 

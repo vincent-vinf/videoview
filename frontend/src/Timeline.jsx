@@ -1,7 +1,7 @@
 import React, { useMemo, useRef, useState } from 'react';
 import { format } from 'date-fns';
 
-const Timeline = ({ videos, onSelectTime }) => {
+const Timeline = ({ videos, onSelectTime, onLiveClick, isLiveAvailable }) => {
   const containerRef = useRef(null);
   const [hoverTime, setHoverTime] = useState(null);
 
@@ -107,6 +107,17 @@ const Timeline = ({ videos, onSelectTime }) => {
             style={{
               left: `${((hoverTime - startTime) / totalDuration) * 100}%`
             }}
+          />
+        )}
+
+        {isLiveAvailable && (
+          <div
+            className="timeline-live-segment"
+            onClick={(e) => {
+              e.stopPropagation();
+              onLiveClick();
+            }}
+            title="Watch Live"
           />
         )}
       </div>
