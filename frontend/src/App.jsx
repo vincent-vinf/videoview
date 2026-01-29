@@ -6,7 +6,7 @@ import './App.css'
 import videojs from 'video.js'
 import { formatDistanceToNow } from 'date-fns'
 
-const API_BASE_URL = `http://${window.location.hostname}:8081`
+const API_BASE_URL = `/api`
 
 function App() {
   const [videos, setVideos] = useState([])
@@ -20,7 +20,7 @@ function App() {
   useEffect(() => {
     const fetchVideos = async () => {
       try {
-        const response = await axios.get(`${API_BASE_URL}/api/videos`)
+        const response = await axios.get(`${API_BASE_URL}/videos`)
         // Sort videos by timestamp descending (newest first)
         const sortedVideos = response.data.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp))
         setVideos(sortedVideos)
@@ -140,7 +140,7 @@ function App() {
                   fill: true,
                   playbackRates: [0.5, 1, 1.5, 2, 5, 10],
                   sources: [{
-                    src: isLiveMode ? liveUrl : `${API_BASE_URL}${currentVideo.url}`,
+                    src: isLiveMode ? liveUrl : `${currentVideo.url}`,
                     type: isLiveMode ? 'application/x-mpegURL' : 'video/mp4'
                   }]
                 }}
@@ -178,7 +178,7 @@ function App() {
                 >
                   {video.thumbnailUrl && (
                     <img
-                      src={`${API_BASE_URL}${video.thumbnailUrl}`}
+                      src={`${video.thumbnailUrl}`}
                       alt={video.name}
                       className="video-thumbnail"
                     />
