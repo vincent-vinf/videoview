@@ -4,7 +4,7 @@ services:
       context: ./backend
       dockerfile: Dockerfile
     volumes:
-      - ./recordings:/videos
+      - /root/mediamtx/recordings:/videos
     restart: always
 
   frontend:
@@ -17,11 +17,3 @@ services:
       - backend
     restart: always
 
-  mediamtx:
-    image: docker.1ms.run/bluenviron/mediamtx:1-ffmpeg
-    ports:
-      - "8888:8888"
-    volumes:
-      - ./mediamtx.yml:/mediamtx.yml
-      - ./recordings:/recordings
-    command: /mediamtx.yml
