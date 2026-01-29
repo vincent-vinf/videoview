@@ -4,7 +4,7 @@ services:
       context: ./backend
       dockerfile: Dockerfile
     volumes:
-      - ./backend/videos:/videos
+      - ./recordings:/videos
     restart: always
 
   frontend:
