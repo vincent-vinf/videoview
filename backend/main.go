@@ -85,13 +85,13 @@ func handleListVideos(w http.ResponseWriter, r *http.Request) {
 			}
 
 			// Parse Timestamp
-			// Expected format: %Y-%m-%d_%H-%M-%S-%f
-			// Go layout: 2006-01-02_15-04-05-000
+			// Expected format: %Y-%m-%d_%H-%M-%S.%f
+			// Go layout: 2006-01-02_15-04-05.000000
 			fileNameWithoutExt := strings.TrimSuffix(d.Name(), filepath.Ext(d.Name()))
-			// Try parsing with milliseconds
-			t, err := time.Parse("2006-01-02_15-04-05-000", fileNameWithoutExt)
+			// Try parsing with microseconds
+			t, err := time.Parse("2006-01-02_15-04-05.000000", fileNameWithoutExt)
 			if err != nil {
-				// Try parsing without milliseconds if that fails, or just fallback
+				// Try parsing without microseconds if that fails, or just fallback
 				info, err := d.Info()
 				if err == nil {
 					t = info.ModTime()
