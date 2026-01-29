@@ -16,3 +16,12 @@ services:
     depends_on:
       - backend
     restart: always
+
+  mediamtx:
+    image: docker.1ms.run/bluenviron/mediamtx:1-ffmpeg
+    ports:
+      - "8888:8888"
+    volumes:
+      - ./mediamtx.yml:/mediamtx.yml
+      - ./recordings:/recordings
+    command: /mediamtx.yml
