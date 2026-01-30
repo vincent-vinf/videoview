@@ -8,7 +8,7 @@
 
     handle /live/* {
         uri strip_prefix /live
-        reverse_proxy mediamtx:8888
+        reverse_proxy host.docker.internal:8888
     }
 
     handle /* {

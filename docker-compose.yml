@@ -8,6 +8,8 @@ services:
     restart: always
 
   frontend:
+    extra_hosts:
+      - "host.docker.internal:host-gateway" 
     build:
       context: ./frontend
       dockerfile: Dockerfile
