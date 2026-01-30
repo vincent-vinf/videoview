@@ -107,7 +107,7 @@ function App() {
   };
 
   // Construct live URL
-  const liveUrl = currentVideo ? `/live/${currentVideo.cameraName}/` : ''
+  const liveUrl = currentVideo ? `/live/${currentVideo.cameraName}/index.m3u8` : ''
 
   return (
     <div className="container">
