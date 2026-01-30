@@ -3,15 +3,11 @@
     file_server
 
     handle /api/* {
-        reverse_proxy backend:8081
+        reverse_proxy 127.0.0.1:8081
     }
 
-    handle /live/* {
-        uri strip_prefix /live
-        reverse_proxy host.docker.internal:8888
-    }
     handle_path /live/* {
-        reverse_proxy host.docker.internal:8888 {
+        reverse_proxy 127.0.0.1:8888 {
             header_up Host {host}
             header_up X-Real-IP {remote_host}
         }

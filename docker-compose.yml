@@ -3,18 +3,17 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile
+    ports:
+      - 8081:8081
     volumes:
       - /root/mediamtx/recordings:/videos
     restart: always
 
   frontend:
-    extra_hosts:
-      - "host.docker.internal:host-gateway" 
+    network_mode: host
     build:
       context: ./frontend
       dockerfile: Dockerfile
-    ports:
-      - "8088:80"
     depends_on:
       - backend
     restart: always
