@@ -6,6 +6,11 @@
         reverse_proxy backend:8081
     }
 
+    handle /live/* {
+        uri strip_prefix /live
+        reverse_proxy mediamtx:8888
+    }
+
     handle /* {
         try_files {path} /index.html
     }

@@ -107,7 +107,7 @@ function App() {
   };
 
   // Construct live URL
-  const liveUrl = currentVideo ? `http://${window.location.hostname}:8888/${currentVideo.cameraName}/` : ''
+  const liveUrl = currentVideo ? `/live/${currentVideo.cameraName}/` : ''
 
   return (
     <div className="container">
